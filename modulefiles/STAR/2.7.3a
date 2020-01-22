@@ -1,0 +1,5 @@
+#%Module1.0
+# STAR-2.7.3a.sif
+set          home   getenv HOME
+set          prefix $home/packages/STAR/2.7.3a
+prepend-path PATH   $prefix/bin

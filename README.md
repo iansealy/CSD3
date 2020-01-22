@@ -16,5 +16,7 @@ ln -s ~/checkouts/CSD3/dotfiles/functions ~/.functions
 ln -s ~/checkouts/CSD3/dotfiles/bash_logout ~/.bash_logout
 ln -s ~/checkouts/CSD3/dotfiles/gitconfig ~/.gitconfig
 ln -s ~/checkouts/CSD3/modulefiles ~/privatemodules
+ln -s ~/checkouts/CSD3/packages ~/packages
+ln -s ~/checkouts/CSD3/bin ~/bin
 exit
 ```

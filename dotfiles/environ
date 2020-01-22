@@ -5,7 +5,7 @@ export ENVIRON_SET=1
 export LC_ALL=C
 
 # Modulefiles
-export MODULEPATH="$HOME/privatemodules:$MODULEPATH"
+export MODULEPATH="$MODULEPATH:$HOME/privatemodules"
 
 # Personal bin
 export PATH="$HOME/bin:$PATH"

@@ -4,6 +4,9 @@ export ENVIRON_SET=1
 # Standard sorting
 export LC_ALL=C
 
+# Modulefiles
+export MODULEPATH="$HOME/privatemodules:$MODULEPATH"
+
 # Personal bin
 export PATH="$HOME/bin:$PATH"
 

@@ -26,9 +26,6 @@ HISTFILESIZE=1000000000
 HISTCONTROL=ignoreboth
 PROMPT_COMMAND='history -a'
 
-# Use own modules
-module load use.own
-
 # Aliases
 if [ -f ~/.aliases ]; then
   . ~/.aliases

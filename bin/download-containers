@@ -3,9 +3,9 @@
 for module in `find $HOME/privatemodules/ -type f | sort`; do
   container=`grep '\.sif$' $module | sed -e 's/^ *#*//' | awk '{ print $NF }'`
   if [ ! -f "$HOME/containers/$container" ]; then
-    echo -n "$container now downloading..." \
-    && curl -Sso "$HOME/containers/$container" "https://csd3.buschlab.org/containers/$container" \
-    && echo " done"
+    echo "$container downloading..." \
+    && curl --progress-bar -o "$HOME/containers/$container" "https://csd3.buschlab.org/containers/$container" \
+    && echo "$container downloaded"
   else
     echo "$container already downloaded"
   fi

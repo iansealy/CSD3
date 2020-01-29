@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for module in `find $HOME/privatemodules/ -type f`; do
+for module in `find $HOME/privatemodules/ -type f | sort`; do
   container=`grep '\.sif$' $module | sed -e 's/^ *#*//' | awk '{ print $NF }'`
   if [ ! -f "$HOME/containers/$container" ]; then
     echo -n "$container now downloading..." \

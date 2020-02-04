@@ -53,9 +53,13 @@ is                 0 | XXXXX-XXXXXXXX-SL3-CPU         0 |       200,000   200,00
 - Test runs on login nodes should be short (seconds), use <= 4 CPUS, max 20 GB RAM and be prefixed with nice -19
 - Can only SSH to nodes where own jobs are running
 
+- Scheduler type is *backfill* (`scontrol show config | grep SchedulerType`) so important to specify reasonable time limits
+
 Slurm:
 
 - Slurm summary: https://slurm.schedmd.com/pdfs/summary.pdf
 - Convert LSF commands to Slurm equivalent: https://slurm.schedmd.com/rosetta.pdf
 
 `bjobs` == `squeue -u $USER`
+`bkill` == `scancel`
+`bjobs -l` == `scontrol show job`

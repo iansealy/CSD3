@@ -23,11 +23,11 @@ exit
 
 ## Useful Info
 
-- https://docs.hpc.cam.ac.uk/hpc/
+Summary of https://docs.hpc.cam.ac.uk/hpc/:
 
 - Hard quota of 40 GB for home directories
-- Home directory snapshots are under /home/.zfs/snapshot
-- Scratch directory is ~/rds/hpc-work (symlink to /rds/user/$USER/hpc-work) and has 1 TB quota and max 1 M files
+- Home directory snapshots are under `/home/.zfs/snapshot`
+- Scratch directory is `~/rds/hpc-work` (symlink to `/rds/user/$USER/hpc-work`) and has 1 TB quota and max 1 M files
 
 `quota`
 
@@ -53,6 +53,9 @@ is                 0 | XXXXX-XXXXXXXX-SL3-CPU         0 |       200,000   200,00
 - Test runs on login nodes should be short (seconds), use <= 4 CPUS, max 20 GB RAM and be prefixed with nice -19
 - Can only SSH to nodes where own jobs are running
 
+Slurm:
+
 - Slurm summary: https://slurm.schedmd.com/pdfs/summary.pdf
 - Convert LSF commands to Slurm equivalent: https://slurm.schedmd.com/rosetta.pdf
+
 `bjobs` == `squeue -u $USER`

@@ -7,14 +7,17 @@ module load datamash/1.5
 (echo -e "-\tMin\tMean\tMax" && \
 echo -ne "CPU\t" && \
 grep -h 'CPU Utilized' $seff \
-| awk '{ print $3 }' | awk -F: '{ print $1 * 3600 + $2 * 60 + $3 }' | nice -19 datamash min 1 mean 1 max 1 \
-| sed -e 's/\t/\n/g' | xargs -ixxx date -d@xxx -u +%H:%M:%S | paste - - - && \
+| awk '{ print $3 }' | awk -F: '{ print $1 * 3600 + $2 * 60 + $3 }' \
+| awk 'NR == 1 { max=$1; min=$1; sum=0 } { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1 } END { printf "%d\n%d\n%f\n", min, max, sum/NR }' \
+| xargs -ixxx date -d@xxx -u +%H:%M:%S | paste - - - && \
 echo -ne "Time\t" && \
 grep -h 'Job Wall-clock' $seff \
-| awk '{ print $4 }' | awk -F: '{ print $1 * 3600 + $2 * 60 + $3 }' | nice -19 datamash min 1 mean 1 max 1 \
-| sed -e 's/\t/\n/g' | xargs -ixxx date -d@xxx -u +%H:%M:%S | paste - - - && \
+| awk '{ print $4 }' | awk -F: '{ print $1 * 3600 + $2 * 60 + $3 }' \
+| awk 'NR == 1 { max=$1; min=$1; sum=0 } { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1 } END { printf "%d\n%d\n%f\n", min, max, sum/NR }' \
+| xargs -ixxx date -d@xxx -u +%H:%M:%S | paste - - - && \
 echo -ne "Memory\t" && \
 grep -h 'Memory Utilized' $seff \
-| awk '{ print $3 $4 }' | sed -e 's/B$//' | xargs numfmt --from=iec | nice -19 datamash min 1 mean 1 max 1 \
-| sed -e 's/\t/\n/g' | xargs -n1 numfmt --to=iec | paste - - -) \
+| awk '{ print $3 $4 }' | sed -e 's/B$//' | xargs numfmt --from=iec \
+| awk 'NR == 1 { max=$1; min=$1; sum=0 } { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1 } END { printf "%d\n%d\n%f\n", min, max, sum/NR }' \
+| xargs -n1 numfmt --to=iec | paste - - -) \
 | column -t

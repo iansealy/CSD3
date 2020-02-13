@@ -1,0 +1,4 @@
+#%Module1.0
+# SAMtools-1.10.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/samtools/1.10/bin

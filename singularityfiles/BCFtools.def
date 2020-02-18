@@ -6,8 +6,8 @@ From: iansealy/alpine/alpine311:3.11.3
     Version 1.10.2
 
 %post
-    apk --no-cache add ncurses-libs zlib libbz2 xz-libs
-    apk --no-cache add --virtual build-dependencies build-base curl ncurses-dev zlib-dev bzip2-dev xz-dev perl bash
+    apk --no-cache add libcurl ncurses-libs zlib libbz2 xz-libs
+    apk --no-cache add --virtual build-dependencies build-base curl curl-dev ncurses-dev zlib-dev bzip2-dev xz-dev perl bash
     curl -SsOL https://github.com/samtools/bcftools/releases/download/1.10.2/bcftools-1.10.2.tar.bz2
     tar jxf bcftools-1.10.2.tar.bz2
     cd bcftools-1.10.2

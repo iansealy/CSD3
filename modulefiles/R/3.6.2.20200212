@@ -1,4 +1,0 @@
-#%Module1.0
-# R-3.6.2.20200212.sif
-eval set [ array get env HOME ]
-prepend-path PATH $HOME/packages/R/3.6.2.20200212/bin

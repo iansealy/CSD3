@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-/usr/bin/singularity run --bind /rds/user/$USER/hpc-work --app Rscript $HOME/containers/R-3.6.2.20200212.sif "$@"

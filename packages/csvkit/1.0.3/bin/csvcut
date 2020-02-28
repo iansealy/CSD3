@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-/usr/bin/singularity run --bind /rds/user/$USER/hpc-work --app csvcut $HOME/containers/csvkit-1.0.3.sif "$@"

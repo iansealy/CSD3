@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-/usr/bin/singularity run --bind /rds/user/$USER/hpc-work --app xxx $HOME/containers/biobambam2-2.0.146.sif "$@"

@@ -1,0 +1,4 @@
+#%Module1.0
+# biobambam2-2.0.146.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/biobambam2/2.0.146/bin

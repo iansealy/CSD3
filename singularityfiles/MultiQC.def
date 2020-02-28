@@ -8,7 +8,7 @@ From: iansealy/alpine/alpine311:3.11.3
 %post
     apk --no-cache add libpng freetype python3 py3-numpy libstdc++
     apk --no-cache add --virtual build-dependencies build-base libpng-dev freetype-dev python3-dev py3-numpy-dev
-    pip3 install multiqc
+    pip3 install multiqc==1.8
     apk del build-dependencies
 
 %environment

@@ -8,7 +8,7 @@ From: iansealy/alpine/alpine311:3.11.3
 %post
     apk --no-cache add python3 py3-numpy py3-scipy zlib libbz2 xz-libs freetype
     apk --no-cache add --virtual build-dependencies build-base python3-dev cython py3-numpy-dev zlib-dev bzip2-dev xz-dev freetype-dev
-    pip3 install deeptools
+    pip3 install deeptools==3.3.2
     apk del build-dependencies
 
 %environment

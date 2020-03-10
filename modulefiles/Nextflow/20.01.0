@@ -1,0 +1,4 @@
+#%Module1.0
+# Nextflow-20.01.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/Nextflow/20.01.0/bin

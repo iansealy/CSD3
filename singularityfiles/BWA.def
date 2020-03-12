@@ -3,20 +3,23 @@ From: iansealy/alpine/alpine311:3.11.3
 
 %labels
     Author Ian Sealy
-    Version 0.7.17
+    Version 0.6.2
 
 %post
     apk --no-cache add zlib
-    apk --no-cache add --virtual build-dependencies build-base curl zlib-dev
-    curl -SsOL https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2
-    tar jxf bwa-0.7.17.tar.bz2
-    cd bwa-0.7.17
+    apk --no-cache add --virtual build-dependencies build-base git zlib-dev perl
+    git clone git://github.com/daviesrob/bwa.git bwa-0.6.2_fixes
+    cd bwa-0.6.2_fixes
+    perl -spi -e 's/u_int32_t/uint32_t/g' bwt_lite.c bwtgap.c bwtgap.h bwtmisc.c
+    perl -spi -e 's/^inline void bwt_2occ/void bwt_2occ/' bwt.c
+    perl -spi -e 's/^inline void bwt_2occ4/void bwt_2occ4/' bwt.c
+    perl -spi -e 's/^inline void bwtl_2occ4/void bwtl_2occ4/' bwt_lite.c
     make
     mkdir -p /usr/local/man/man1
     cp bwa /usr/local/bin
     cp bwa.1 /usr/local/man/man1
     cd ..
-    rm -rf bwa-0.7.17*
+    rm -rf bwa-0.6.2_fixes
     apk del build-dependencies
 
 %environment

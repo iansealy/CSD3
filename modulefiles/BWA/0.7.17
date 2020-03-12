@@ -1,0 +1,4 @@
+#%Module1.0
+# BWA-0.7.17.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/BWA/0.7.17/bin

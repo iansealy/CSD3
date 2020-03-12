@@ -1,0 +1,4 @@
+#%Module1.0
+# minimap2-2.17.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/minimap2/2.17/bin

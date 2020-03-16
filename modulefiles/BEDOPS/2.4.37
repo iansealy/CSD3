@@ -1,0 +1,4 @@
+#%Module1.0
+# BEDOPS-2.4.37.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/BEDOPS/2.4.37/bin

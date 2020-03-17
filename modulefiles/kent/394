@@ -1,0 +1,4 @@
+#%Module1.0
+# kent-394.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/kent/394/bin

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/usr/bin/singularity run --bind /rds/user/$USER/hpc-work $HOME/containers/Sambamba-0.7.1.sif "$@"

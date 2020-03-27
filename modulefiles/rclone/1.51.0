@@ -1,0 +1,4 @@
+#%Module1.0
+# rclone-1.51.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/rclone/1.51.0/bin

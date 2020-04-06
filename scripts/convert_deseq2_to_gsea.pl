@@ -83,7 +83,7 @@ while ( my $line = <$all_fh> ) {
     }
     ## no critic (ProhibitMagicNumbers)
     $score_for{ $fields[0] } =
-      -log( $fields[1] ) / log(10) * $fields[3] < 0 ? -1 : 1;
+      -log( $fields[1] ) / log(10) * ( $fields[3] < 0 ? -1 : 1 );
     ## use critic
 }
 close $all_fh;

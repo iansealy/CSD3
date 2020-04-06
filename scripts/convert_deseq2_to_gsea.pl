@@ -56,7 +56,7 @@ my @classes = map { $condition_for{$_} eq $exp_condition ? 0 : 1 } @samples;
 printf {$samples_fh} "%s\n", ( join q{ }, @classes );
 close $samples_fh;
 
-# Get headings, normalised counts and adjusted p-value
+# Get headings, normalised counts and score
 open my $all_fh, '<', $all_file;    ## no critic (RequireBriefOpen)
 my $header = <$all_fh>;
 chomp $header;
@@ -72,7 +72,7 @@ foreach my $heading (@headings) {
 }
 my @genes;
 my %counts_for;
-my %adjp_for;
+my %score_for;
 while ( my $line = <$all_fh> ) {
     chomp $line;
     my @fields = split /\t/xms, $line;
@@ -81,7 +81,10 @@ while ( my $line = <$all_fh> ) {
     foreach my $sample (@samples) {
         push @{ $counts_for{$sample} }, $fields[ $sample_to_col{$sample} ];
     }
-    $adjp_for{ $fields[0] } = $fields[2];
+    ## no critic (ProhibitMagicNumbers)
+    $score_for{ $fields[0] } =
+      -log( $fields[1] ) / log(10) * $fields[3] < 0 ? -1 : 1;
+    ## use critic
 }
 close $all_fh;
 
@@ -104,7 +107,7 @@ close $gct_fh;
 my $rnk_file = File::Spec->catfile( $output_dir, 'genes.rnk' );
 open my $rnk_fh, '>', $rnk_file;
 foreach my $gene (@genes) {
-    printf {$rnk_fh} "%s\t%s\n", $gene, $adjp_for{$gene};
+    printf {$rnk_fh} "%s\t%s\n", $gene, $score_for{$gene};
 }
 close $rnk_fh;
 

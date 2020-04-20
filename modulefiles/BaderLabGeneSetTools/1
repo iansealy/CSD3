@@ -1,0 +1,4 @@
+#%Module1.0
+# BaderLabGeneSetTools-1.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/BaderLabGeneSetTools/1/bin

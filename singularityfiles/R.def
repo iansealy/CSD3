@@ -3,7 +3,7 @@ From: iansealy/ubuntu/ubuntu1804:18.04
 
 %labels
     Author Ian Sealy
-    Version 3.6.2
+    Version 3.6.3
 
 %post
     apt-get -q update
@@ -14,9 +14,9 @@ From: iansealy/ubuntu/ubuntu1804:18.04
       libpcre3 libpcre3-dev libcurl4 libcurl4-openssl-dev libpng16-16 libpng-dev libjpeg8 libjpeg8-dev \
       libtiff5 libtiff5-dev libcairo2 libcairo2-dev libicu60 libicu-dev \
       libxml2 libxml2-dev libssl1.1 libssl-dev
-    curl -SsOL https://cran.r-project.org/src/base/R-3/R-3.6.2.tar.gz
-    tar zxf R-3.6.2.tar.gz
-    cd R-3.6.2
+    curl -SsOL https://cran.r-project.org/src/base/R-3/R-3.6.3.tar.gz
+    tar zxf R-3.6.3.tar.gz
+    cd R-3.6.3
     ./configure --disable-java --with-blas --without-x
     make
     make check
@@ -24,7 +24,7 @@ From: iansealy/ubuntu/ubuntu1804:18.04
     make install
     perl -spi -e 's/# (.*)\@CRAN\@(.*)/${1}https:\/\/cloud.r-project.org\/$2/' /usr/local/lib/R/library/base/R/Rprofile
     cd ..
-    rm -rf R-3.6.2*
+    rm -rf R-3.6.3*
     R --slave -e "update.packages(ask=FALSE)"
     R --slave -e "install.packages('tidyverse')"
     R --slave -e "install.packages('BiocManager')"
@@ -32,13 +32,7 @@ From: iansealy/ubuntu/ubuntu1804:18.04
     R --slave -e "BiocManager::install('DESeq2')"
     R --slave -e "install.packages('optparse')"
     R --slave -e "install.packages('devtools')"
-    apt-get -q -y purge curl build-essential gfortran \
-      texlive-latex-base texlive-fonts-extra libopenblas-dev \
-      libreadline-dev zlib1g-dev libbz2-dev liblzma-dev \
-      libpcre3-dev libcurl4-openssl-dev libpng-dev libjpeg8-dev \
-      libtiff5-dev libcairo2-dev libicu-dev \
-      libxml2-dev libssl-dev
-    apt-get -q -y autoremove
+    apt-get -q -y purge texlive-fonts-extra
     apt-get -q -y clean
     rm -rf /var/lib/apt/lists/*
 

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+base=$1
+
+cat /dev/null > $base.seff
+for id in `ls $base.machine.file.* | sed -e 's/.*\.//'`; do
+  seff $id >> $base.seff
+done

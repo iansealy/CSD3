@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+module load datamash/1.5
+
+base=$1
+
+cat /dev/null > $base.seff
+for id in `ls $base.machine.file.* | sed -e 's/.*\.//'`; do
+  seff $id >> $base.seff
+  echo >> $base.seff
+done
+
+(echo -e "-\tMin\tMean\tMax" && \
+echo -ne "CPU\t" && \
+grep -h 'CPU Utilized' "$base.seff" \
+| awk '{ print $3 }' | awk -F: '{ print $1 * 3600 + $2 * 60 + $3 }' \
+| awk 'NR == 1 { max=$1; min=$1; sum=0 } { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1 } END { printf "%d\n%d\n%f\n", min, sum/NR, max }' \
+| xargs -ixxx date -d@xxx -u +%H:%M:%S | paste - - - && \
+echo -ne "Time\t" && \
+grep -h 'Job Wall-clock' "$base.seff" \
+| awk '{ print $4 }' | awk -F: '{ print $1 * 3600 + $2 * 60 + $3 }' \
+| awk 'NR == 1 { max=$1; min=$1; sum=0 } { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1 } END { printf "%d\n%d\n%f\n", min, sum/NR, max }' \
+| xargs -ixxx date -d@xxx -u +%H:%M:%S | paste - - - && \
+echo -ne "Memory\t" && \
+grep -h 'Memory Utilized' "$base.seff" \
+| awk '{ print $3 $4 }' | sed -e 's/B$//' | xargs numfmt --from=iec \
+| awk 'NR == 1 { max=$1; min=$1; sum=0 } { if ($1>max) max=$1; if ($1<min) min=$1; sum+=$1 } END { printf "%d\n%d\n%f\n", min, sum/NR, max }' \
+| xargs -n1 numfmt --to=iec | paste - - -) \
+| column -t > "$base.seff.summary"
+
+grep ^State "$base.seff" | awk '{ print $2 }' | sort | uniq -c | sort -nr
+
+awk 'BEGIN { RS="\n\n" } { if ($0 !~ /COMPLETED/) print $0 "\n" }' "$base.seff" \
+| grep -E '^(Job ID|State|CPU Utilized|Job Wall-clock time|Memory Utilized|$)'

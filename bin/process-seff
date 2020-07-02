@@ -30,5 +30,5 @@ grep -h 'Memory Utilized' "$base.seff" \
 
 grep ^State "$base.seff" | awk '{ print $2 }' | sort | uniq -c | sort -nr
 
-awk 'BEGIN { RS="\n\n" } { if ($0 !~ /COMPLETED/) print $0 "\n" }' "$base.seff" \
+awk 'BEGIN { RS="\n\n" } { if ($0 !~ /COMPLETED/ && $0 !~ /RUNNING/) print $0 "\n" }' "$base.seff" \
 | grep -E '^(Job ID|State|CPU Utilized|Job Wall-clock time|Memory Utilized|$)'

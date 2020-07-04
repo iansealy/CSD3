@@ -6,7 +6,7 @@ From: iansealy/alpine/alpine311:3.11.3
     Version 0.6.7
 
 %post
-    apk --no-cache add R python2
+    apk --no-cache add R python2 font-noto
     apk --no-cache add --virtual build-dependencies build-base perl curl R-dev python2-dev
     perl -spi -e 's/# (.*)\@CRAN\@(.*)/${1}https:\/\/cloud.r-project.org\/$2/' /usr/lib/R/library/base/R/Rprofile
     R --slave -e "update.packages(ask=FALSE)"

@@ -10,6 +10,16 @@ for module in `find $HOME/privatemodules/ -type f | sort`; do
       && mv "$HOME/containers/tmp" "$HOME/containers/$container" ) \
     || rm -f "$HOME/containers/tmp"
   else
-    echo "$container already downloaded"
+    size1=`stat -c %s "$HOME/containers/$container"`
+    size2=`curl -s --head "https://csd3.buschlab.org/containers/$container" | grep Content-Length | awk '{ print $2 }' | sed -e 's/[^0-9]*//g'`
+    if [ "$size1" -ne "$size2" ]; then
+      rm "$HOME/containers/$container"
+      echo "$container updating..."
+      ( curl --progress-bar -o "$HOME/containers/tmp" "https://csd3.buschlab.org/containers/$container" \
+        && mv "$HOME/containers/tmp" "$HOME/containers/$container" ) \
+      || rm -f "$HOME/containers/tmp"
+    else
+      echo "$container already downloaded"
+    fi
   fi
 done

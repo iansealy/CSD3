@@ -77,13 +77,13 @@ sub get_and_check_options {
     # Get options
     GetOptions(
         'accession_regexp=s' => \$accession_regexp,
-        'ensembl_dbhost=s' => \$ensembl_dbhost,
-        'ensembl_dbport=i' => \$ensembl_dbport,
-        'ensembl_dbuser=s' => \$ensembl_dbuser,
-        'ensembl_dbpass=s' => \$ensembl_dbpass,
-        'debug'            => \$debug,
-        'help'             => \$help,
-        'man'              => \$man,
+        'ensembl_dbhost=s'   => \$ensembl_dbhost,
+        'ensembl_dbport=i'   => \$ensembl_dbport,
+        'ensembl_dbuser=s'   => \$ensembl_dbuser,
+        'ensembl_dbpass=s'   => \$ensembl_dbpass,
+        'debug'              => \$debug,
+        'help'               => \$help,
+        'man'                => \$man,
     ) or pod2usage(2);
 
     # Documentation

@@ -20,6 +20,7 @@ no warnings 'recursion';    ## no critic (ProhibitNoWarnings)
 use Bio::EnsEMBL::Registry;
 
 # Default options
+my $accession_regexp;
 my $ensembl_dbhost = 'ensembldb.ensembl.org';
 my $ensembl_dbport;
 my $ensembl_dbuser = 'anonymous';
@@ -62,6 +63,7 @@ $sth->execute();
 my $accession;
 $sth->bind_columns( \($accession) );
 while ( $sth->fetch() ) {
+    next if defined $accession_regexp && $accession !~ m/$accession_regexp/xms;
     my $term = $goa->fetch_by_accession($accession);
     my %descendant =
       map { $_->accession => 1 } @{ $goa->fetch_all_by_ancestor_term($term) };
@@ -74,6 +76,7 @@ sub get_and_check_options {
 
     # Get options
     GetOptions(
+        'accession_regexp=s' => \$accession_regexp,
         'ensembl_dbhost=s' => \$ensembl_dbhost,
         'ensembl_dbport=i' => \$ensembl_dbport,
         'ensembl_dbuser=s' => \$ensembl_dbuser,
@@ -124,6 +127,7 @@ descendant terms.
 =head1 USAGE
 
    get_ensembl_go_as_gmt_stage1.pl
+        [--accession_regexp regexp]
         [--ensembl_dbhost host]
         [--ensembl_dbport port]
         [--ensembl_dbuser username]
@@ -135,6 +139,10 @@ descendant terms.
 =head1 OPTIONS
 
 =over 8
+
+=item B<--accession_regexp REGEXP>
+
+Regular expression for limiting terms by accession.
 
 =item B<--ensembl_dbhost HOST>
 

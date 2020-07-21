@@ -1,11 +1,11 @@
 #!/usr/bin/env perl
 
-# PODNAME: get_ensembl_go_as_gmt_stage1.pl
-# ABSTRACT: Get Ensembl GO terms as a GMT file for GSEA (stage 1)
+# PODNAME: get_ensembl_go_descendants.pl
+# ABSTRACT: Get Ensembl GO terms with all their descendant terms
 
 ## Author     : Ian Sealy
 ## Maintainer : Ian Sealy
-## Created    : 2020-07-20
+## Created    : 2020-07-21
 
 use warnings;
 use strict;
@@ -20,7 +20,6 @@ no warnings 'recursion';    ## no critic (ProhibitNoWarnings)
 use Bio::EnsEMBL::Registry;
 
 # Default options
-my $species        = 'Danio rerio';
 my $ensembl_dbhost = 'ensembldb.ensembl.org';
 my $ensembl_dbport;
 my $ensembl_dbuser = 'anonymous';
@@ -43,7 +42,6 @@ my $genebuild_version = 'e' . Bio::EnsEMBL::ApiVersion::software_version();
 warn 'Genebuild version: ', $genebuild_version, "\n" if $debug;
 
 # Get Ensembl adaptors
-my $ga = Bio::EnsEMBL::Registry->get_adaptor( $species, 'core', 'Gene' );
 my $goa =
   Bio::EnsEMBL::Registry->get_adaptor( 'Multi', 'Ontology', 'OntologyTerm' );
 
@@ -57,18 +55,7 @@ else {
     Bio::EnsEMBL::Registry->set_reconnect_when_lost();
 }
 
-# Link all genes to their GO terms
-my %go2gene;
-foreach my $gene ( @{ $ga->fetch_all() } ) {
-    my $links = $gene->get_all_DBLinks();
-    foreach my $link ( @{$links} ) {
-        next if ref $link !~ m/OntologyXref/xms;
-        $go2gene{ $link->primary_id }{ $gene->stable_id } = 1;
-    }
-}
-warn 'Terms: ', scalar keys %go2gene, "\n" if $debug;
-
-# Link all terms to all their descendant genes
+# Link all terms to their descendant terms
 foreach my $root_term ( @{ $goa->fetch_all_roots('GO') } ) {
     descend_ontology( $root_term, 0 );
 }
@@ -78,22 +65,19 @@ sub descend_ontology {
 
     $depth++;
 
-    my %gene;
-    if ( exists $go2gene{ $term->accession } ) {
-        %gene = %{ $go2gene{ $term->accession } };
-    }
-
+    my %term = ( $term->accession => 1 );
     foreach my $child_term ( @{ $term->children } ) {
-        my @genes = descend_ontology( $child_term, $depth );
-        foreach my $gene (@genes) {
-            $gene{$gene} = 1;
+        $term{ $child_term->accession } = 1;
+        my @terms = descend_ontology( $child_term, $depth );
+        foreach my $term (@terms) {
+            $term{$term} = 1;
         }
     }
 
     printf "%d\t%s\t%s\t%s\t%s\n", $depth, $term->accession, $term->name,
-      $term->namespace, ( join q{,}, sort keys %gene );
+      $term->namespace, ( join q{,}, sort keys %term ) || q{-};
 
-    return keys %gene;
+    return keys %term;
 }
 
 # Get and check command line options
@@ -101,7 +85,6 @@ sub get_and_check_options {
 
     # Get options
     GetOptions(
-        'species=s'        => \$species,
         'ensembl_dbhost=s' => \$ensembl_dbhost,
         'ensembl_dbport=i' => \$ensembl_dbport,
         'ensembl_dbuser=s' => \$ensembl_dbuser,
@@ -129,9 +112,9 @@ __END__
 
 =head1 NAME
 
-get_ensembl_go_as_gmt_stage1.pl
+get_ensembl_go_descendants.pl
 
-Get Ensembl GO terms as a GMT file for GSEA (stage 1)
+Get Ensembl GO terms with all their descendant terms
 
 =head1 VERSION
 
@@ -139,27 +122,19 @@ version 0.1.0
 
 =head1 DESCRIPTION
 
-This script dumps a list of Gene Ontology terms along with a list of the stable
-IDs of all the genes associated with the term or its descendants. The second
-stage turns this list into a GMT file for GSEA.
+This script dumps a list of Gene Ontology terms along with a list of their
+descendant terms.
 
 =head1 EXAMPLES
 
     perl \
         -Ibranch-ensembl-99/ensembl/modules \
-        get_ensembl_go_as_gmt_stage1.pl \
-        > go2genes.tsv
-
-    perl \
-        -Ibranch-ensembl-99/ensembl/modules \
-        get_ensembl_go_as_gmt_stage1.pl \
-        --species "Homo sapiens" \
-        > go2genes.tsv
+        get_ensembl_go_descendants.pl \
+        > go.tsv
 
 =head1 USAGE
 
    get_ensembl_go_as_gmt_stage1.pl
-        [--species species]
         [--ensembl_dbhost host]
         [--ensembl_dbport port]
         [--ensembl_dbuser username]
@@ -171,10 +146,6 @@ stage turns this list into a GMT file for GSEA.
 =head1 OPTIONS
 
 =over 8
-
-=item B<--species SPECIES>
-
-Species (defaults to "Danio rerio").
 
 =item B<--ensembl_dbhost HOST>
 

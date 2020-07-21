@@ -55,29 +55,18 @@ else {
     Bio::EnsEMBL::Registry->set_reconnect_when_lost();
 }
 
-# Link all terms to their descendant terms
-foreach my $root_term ( @{ $goa->fetch_all_roots('GO') } ) {
-    descend_ontology( $root_term, 0 );
-}
-
-sub descend_ontology {
-    my ( $term, $depth ) = @_;
-
-    $depth++;
-
-    my %term = ( $term->accession => 1 );
-    foreach my $child_term ( @{ $term->children } ) {
-        $term{ $child_term->accession } = 1;
-        my @terms = descend_ontology( $child_term, $depth );
-        foreach my $term (@terms) {
-            $term{$term} = 1;
-        }
-    }
-
-    printf "%d\t%s\t%s\t%s\t%s\n", $depth, $term->accession, $term->name,
-      $term->namespace, ( join q{,}, sort keys %term ) || q{-};
-
-    return keys %term;
+my $statement =
+  q(SELECT accession FROM term WHERE is_obsolete = 0 AND accession LIKE "GO:%");
+my $sth = $goa->prepare($statement);
+$sth->execute();
+my $accession;
+$sth->bind_columns( \($accession) );
+while ( $sth->fetch() ) {
+    my $term = $goa->fetch_by_accession($accession);
+    my %descendant =
+      map { $_->accession => 1 } @{ $goa->fetch_all_by_ancestor_term($term) };
+    printf "%s\t%s\t%s\t%s\n", $term->accession, $term->name,
+      $term->namespace, ( join q{,}, sort keys %descendant ) || q{-};
 }
 
 # Get and check command line options

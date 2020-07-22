@@ -44,7 +44,7 @@ foreach my $namespace (@namespaces) {
 
 # Output gene sets, collapsing duplicates
 # Show name only for term with smallest number of genes, but list all accessions
-    open my $fh, '>', $short_namespace . '.tsv'; ## no critic (RequireBriefOpen)
+    open my $fh, '>', $short_namespace . '.gmt'; ## no critic (RequireBriefOpen)
     foreach my $genes ( keys %{$allgene2go} ) {
         ## no critic (ProhibitReverseSortBlock)
         my @terms =

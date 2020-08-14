@@ -1,0 +1,4 @@
+#%Module1.0
+# Exonerate-2.4.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/Exonerate/2.4.0/bin

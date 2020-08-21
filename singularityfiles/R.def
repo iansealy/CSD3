@@ -32,6 +32,7 @@ From: iansealy/ubuntu/ubuntu1804:18.04
     R --slave -e "BiocManager::install()"
     R --slave -e "BiocManager::install('DESeq2')"
     R --slave -e "install.packages('pheatmap')"
+    R --slave -e "install.packages('ggrepel')"
     R --slave -e "install.packages('optparse')"
     R --slave -e "install.packages('devtools')"
     apt-get -q -y purge texlive-fonts-extra

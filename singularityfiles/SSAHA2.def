@@ -37,4 +37,4 @@ From: iansealy/ubuntu/ubuntu1804:18.04
     /usr/local/bin/ssahaSNP "$@"
 
 %help
-    kent - command-line genomics utilities
+    SSAHA2 - pairwise sequence alignment program

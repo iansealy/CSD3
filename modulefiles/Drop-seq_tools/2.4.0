@@ -1,0 +1,4 @@
+#%Module1.0
+# Drop-seq_tools-2.4.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/Drop-seq_tools/2.4.0/bin

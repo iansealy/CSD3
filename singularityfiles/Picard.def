@@ -8,6 +8,7 @@ From: iansealy/alpine/alpine311:3.11.3
 %post
     apk --no-cache add --virtual build-dependencies curl
     apk --no-cache add openjdk8-jre libc6-compat
+    ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
     mkdir -p /usr/local/share/java
     cd /usr/local/share/java
     curl -SsOL https://github.com/broadinstitute/picard/releases/download/2.22.1/picard.jar

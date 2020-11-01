@@ -6,8 +6,9 @@ From: iansealy/alpine/alpine311:3.11.3
     Version 2.4.0
 
 %post
-    apk --no-cache add openjdk8-jre bash libcurl ncurses-libs zlib libbz2 xz-libs
-    apk --no-cache add --virtual build-dependencies build-base curl  curl-dev ncurses-dev zlib-dev bzip2-dev xz-dev perl
+    apk --no-cache add openjdk8-jre libc6-compat bash libcurl ncurses-libs zlib libbz2 xz-libs
+    apk --no-cache add --virtual build-dependencies build-base curl curl-dev ncurses-dev zlib-dev bzip2-dev xz-dev perl
+    ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
     curl -SsOL https://github.com/broadinstitute/Drop-seq/releases/download/v2.4.0/Drop-seq_tools-2.4.0.zip
     unzip Drop-seq_tools-2.4.0.zip
     mv Drop-seq_tools-2.4.0 /opt/Drop-seq_tools

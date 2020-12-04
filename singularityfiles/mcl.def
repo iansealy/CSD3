@@ -1,0 +1,79 @@
+Bootstrap: library
+From: iansealy/ubuntu/ubuntu1804:18.04
+
+%labels
+    Author Richard White
+    Version 14-137
+
+%post
+    # update and install new packages
+    DEBIAN_FRONTEND=noninteractive
+    apt-get -q update
+    apt-get -q -y upgrade
+    apt-get -q -y install curl libcurl4 libcurl4-openssl-dev build-essential g++-4.8
+    
+    export MCL_VERSION='14-137'
+    curl -SsOL https://micans.org/mcl/src/mcl-${MCL_VERSION}.tar.gz
+    tar xzf mcl-${MCL_VERSION}.tar.gz
+    cd mcl-${MCL_VERSION}/
+    ./configure --prefix=/usr/local CC=/usr/bin/gcc-4.8
+    make install
+    cd ..
+    rm -rf mcl-*
+
+    apt-get -q -y purge build-essential cpp-4.8 curl g++ g++-4.8 g++-7 gcc \
+      gcc-4.8 gcc-4.8-base libasan0 libcurl4 libcurl4-openssl-dev \
+      libgcc-4.8-dev libstdc++-4.8-dev libstdc++-7-dev
+    apt-get -q -y clean
+
+%runscript
+    mcl "$@"
+
+%apprun clm
+    /usr/local/bin/clm "$@"
+
+%apprun clmformat
+    /usr/local/bin/clmformat "$@"
+
+%apprun clxdo
+    /usr/local/bin/clxdo "$@"
+
+%apprun mcl
+    /usr/local/bin/mcl "$@"
+
+%apprun mclcm
+    /usr/local/bin/mclcm "$@"
+
+%apprun mclpipeline
+    /usr/local/bin/mclpipeline "$@"
+
+%apprun mcx
+    /usr/local/bin/mcx "$@"
+  
+%apprun mcxarray
+    /usr/local/bin/mcxarray "$@"
+
+%apprun mcxassemble
+    /usr/local/bin/mcxassemble "$@"
+
+%apprun mcxdump
+    /usr/local/bin/mcxdump "$@"
+
+%apprun mcxi
+    /usr/local/bin/mcxi "$@"
+
+%apprun mcxload
+    /usr/local/bin/mcxload "$@"
+
+%apprun mcxmap
+    /usr/local/bin/mcxmap "$@"
+
+%apprun mcxrand
+    /usr/local/bin/mcxrand "$@"
+
+%apprun mcxsubs
+    /usr/local/bin/mcxsubs "$@"
+
+%help
+    mcl - Markov Cluster Algorithm for graph construction and clustering
+    https://micans.org/mcl

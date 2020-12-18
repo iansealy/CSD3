@@ -30,10 +30,11 @@ get_and_check_options();
 
 # Connnect to Ensembl database
 Bio::EnsEMBL::Registry->load_registry_from_db(
-    -host => $ensembl_dbhost,
-    -port => $ensembl_dbport,
-    -user => $ensembl_dbuser,
-    -pass => $ensembl_dbpass,
+    -host    => $ensembl_dbhost,
+    -port    => $ensembl_dbport,
+    -user    => $ensembl_dbuser,
+    -pass    => $ensembl_dbpass,
+    -species => $species,
 );
 
 # Get genebuild version

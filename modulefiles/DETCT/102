@@ -1,0 +1,4 @@
+#%Module1.0
+# DETCT-102.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/DETCT/102/bin

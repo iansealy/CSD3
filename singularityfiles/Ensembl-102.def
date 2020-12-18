@@ -6,7 +6,7 @@ From: iansealy/alpine/alpine311:3.11.3
     Version 102
 
 %post
-    apk --no-cache add perl perl-dbd-mysql perl-try-tiny perl-uri perl-config-inifiles perl-list-moreutils perl-path-tiny perl-readonly libcurl ncurses-libs zlib libbz2 xz-libs
+    apk --no-cache add perl perl-dbd-mysql perl-try-tiny perl-uri perl-config-inifiles perl-list-moreutils perl-path-tiny perl-readonly perl-json libcurl ncurses-libs zlib libbz2 xz-libs
     apk --no-cache add --virtual build-dependencies build-base git perl-dev perl-module-build perl-app-cpanminus wget curl curl-dev ncurses-dev zlib-dev bzip2-dev xz-dev bash
     git clone -b release-1-6-924 https://github.com/bioperl/bioperl-live.git
     mv bioperl-live/Bio* /usr/local/lib/perl5/site_perl
@@ -25,6 +25,7 @@ From: iansealy/alpine/alpine311:3.11.3
     cd ..
     rm -rf htslib-1.11*
     cpanm Bio::DB::HTS
+    cpanm Sort::Naturally
     cpanm Sort::Naturally
     apk del build-dependencies
     echo '#!/usr/bin/env sh

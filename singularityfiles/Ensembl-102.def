@@ -26,7 +26,6 @@ From: iansealy/alpine/alpine311:3.11.3
     rm -rf htslib-1.11*
     cpanm Bio::DB::HTS
     cpanm Sort::Naturally
-    cpanm Sort::Naturally
     apk del build-dependencies
     echo '#!/usr/bin/env sh
 if [ -d "$HOME/perl5-ensembl-102" ]; then

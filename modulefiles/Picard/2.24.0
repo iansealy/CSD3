@@ -1,0 +1,4 @@
+#%Module1.0
+# Picard-2.24.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/Picard/2.24.0/bin

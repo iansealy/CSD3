@@ -1,0 +1,4 @@
+#%Module1.0
+# GATK-4.1.9.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/GATK/4.1.9.0/bin

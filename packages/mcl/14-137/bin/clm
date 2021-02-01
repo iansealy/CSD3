@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-/usr/bin/singularity run --bind /rds/user/$USER/hpc-work --app clm $HOME/containers/mcl-14-137.sif "$@"

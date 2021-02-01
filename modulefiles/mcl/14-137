@@ -1,4 +1,0 @@
-#%Module1.0
-# mcl-14-137.sif
-eval set [ array get env HOME ]
-prepend-path PATH $HOME/packages/mcl/14-137/bin

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-/usr/bin/singularity run --bind /rds/user/$USER/hpc-work --app csvpy $HOME/containers/csvkit-1.0.4.sif "$@"
+/usr/bin/singularity run --bind /rds/user/$USER/hpc-work,/rds/project/rds-4Pn70P2LQH0 --app csvpy $HOME/containers/csvkit-1.0.4.sif "$@"

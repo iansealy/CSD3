@@ -1,0 +1,4 @@
+#%Module1.0
+# WhatsHap-1.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/WhatsHap/1.0/bin

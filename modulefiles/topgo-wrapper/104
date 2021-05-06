@@ -1,0 +1,4 @@
+#%Module1.0
+# topgo-wrapper-104.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/topgo-wrapper/104/bin

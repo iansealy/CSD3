@@ -7,10 +7,12 @@ From: iansealy/alpine/alpine311:3.11.3
 
 %post
     apk --no-cache add R perl
-    apk --no-cache add --virtual build-dependencies build-base git wget R-dev perl-app-cpanminus
+    apk --no-cache add --virtual build-dependencies build-base git wget R-dev perl-app-cpanminus msttcorefonts-installer
     perl -spi -e 's/# (.*)\@CRAN\@(.*)/${1}https:\/\/cloud.r-project.org\/$2/' /usr/lib/R/library/base/R/Rprofile
     R --slave -e "update.packages(ask=FALSE)"
     R --slave -e "install.packages('gtools')"
+    update-ms-fonts
+    fc-cache -f
     cpanm Text::NSP::Measures::2D::Fisher::twotailed
     git clone https://github.com/xiekunwhy/bsa.git
     cd bsa

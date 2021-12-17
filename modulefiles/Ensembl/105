@@ -1,0 +1,4 @@
+#%Module1.0
+# Ensembl-105.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/Ensembl/105/bin

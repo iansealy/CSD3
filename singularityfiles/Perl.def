@@ -7,7 +7,10 @@ From: iansealy/alpine/alpine315:3.15.0
 
 %post
     apk --no-cache add perl perl-list-moreutils perl-readonly perl-path-tiny perl-strictures perl-sereal perl-dbi perl-dbd-mysql
-    apk --no-cache add --virtual build-dependencies build-base wget perl-dev perl-app-cpanminus
+    apk --no-cache add --virtual build-dependencies build-base git wget perl-dev perl-app-cpanminus
+    git clone -b release-1-6-924 https://github.com/bioperl/bioperl-live.git
+    mv bioperl-live/Bio* /usr/local/lib/perl5/site_perl
+    rm -rf bioperl-live
     cpanm indirect multidimensional bareword::filehandles
     apk del build-dependencies
     echo '#!/usr/bin/env sh

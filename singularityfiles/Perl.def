@@ -6,7 +6,10 @@ From: iansealy/alpine/alpine315:3.15.0
     Version 5.43.0
 
 %post
-    apk --no-cache add perl perl-list-moreutils perl-readonly perl-path-tiny perl-strictures perl-sereal
+    apk --no-cache add perl perl-list-moreutils perl-readonly perl-path-tiny perl-strictures perl-sereal perl-dbi perl-dbd-mysql
+    apk --no-cache add --virtual build-dependencies build-base wget perl-dev perl-app-cpanminus
+    cpanm indirect multidimensional bareword::filehandles
+    apk del build-dependencies
     echo '#!/usr/bin/env sh
 if [ -d "$HOME/perl5.43.0" ]; then
   perl -I$HOME/perl5.43.0 "$@"

@@ -1,0 +1,4 @@
+#%Module1.0
+# Perl-5.43.0.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/Perl/5.43.0/bin

@@ -1,0 +1,4 @@
+#%Module1.0
+# Ensembl-Genomes-103.sif
+eval set [ array get env HOME ]
+prepend-path PATH $HOME/packages/Ensembl-Genomes/103/bin
